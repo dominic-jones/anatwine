@@ -1,14 +1,9 @@
-package com.anatwine.stock.application;
+package com.anatwine.stock;
 
-import com.anatwine.stock.StockPackageMarker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
-@Configuration
-@ComponentScan(basePackageClasses = StockPackageMarker.class)
 public class StockLevelServiceApplication {
 
     public static void main(String[] args) {

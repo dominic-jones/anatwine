@@ -1,6 +1,6 @@
 package com.anatwine.wiring;
 
-import com.anatwine.stock.application.StockLevelServiceApplication;
+import com.anatwine.stock.StockLevelServiceApplication;
 import com.anatwine.stock.ws.StockLevelWS;
 import org.junit.Test;
 import org.junit.runner.RunWith;
