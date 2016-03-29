@@ -21,7 +21,8 @@ public class StockLevel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STOCKLEVEL_SEQ")
-    private Long Id;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "quantity")
     private int quantity;
@@ -44,7 +45,7 @@ public class StockLevel {
     private String status;
 
     @Column(name = "updated_at")
-    private Date UpdatedAt;
+    private Date updatedAt;
 
     public Set<Long> getChannels() {
         return channels;
@@ -63,11 +64,11 @@ public class StockLevel {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public int getQuantity() {
@@ -79,11 +80,11 @@ public class StockLevel {
     }
 
     public Date getUpdatedAt() {
-        return UpdatedAt;
+        return updatedAt;
     }
 
     public void setUpdatedAt(Date updatedAt) {
-        UpdatedAt = updatedAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getStatus() {
