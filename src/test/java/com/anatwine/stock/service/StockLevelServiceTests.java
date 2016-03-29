@@ -3,6 +3,7 @@ package com.anatwine.stock.service;
 import com.anatwine.date.CurrentDateFactory;
 import com.anatwine.stock.entity.StockLevel;
 import com.anatwine.stock.repository.StockLevelRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -14,9 +15,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Date;
 import java.util.List;
 
+import static com.anatwine.stock.service.StockStatus.ACTIVE_STATUS;
+import static com.anatwine.stock.service.StockStatus.PENDING_STATUS;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -25,6 +29,9 @@ public class StockLevelServiceTests {
 
     @Mock
     StockLevelRepository stockLevelRepository;
+
+    @Mock
+    ClientStatusMapper clientStatusMapper;
 
     @Mock
     CurrentDateFactory currentDateFactory;
@@ -38,6 +45,12 @@ public class StockLevelServiceTests {
     long brandId = 1L;
     long stockLevelId = 1L;
     long irrelevantId = 7L;
+
+    @Before
+    public void setUp() {
+        when(clientStatusMapper.getClientStatus(anyLong()))
+                .thenReturn(PENDING_STATUS);
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void givenNoBrandIdWhenAddingStockLevelThenFail() {
@@ -81,6 +94,21 @@ public class StockLevelServiceTests {
 
         verify(stockLevelRepository).addStockLevel(stockLevelCaptor.capture());
         assertEquals(expectedDate, stockLevelCaptor.getValue().getUpdatedAt());
+    }
+
+    @Test
+    public void shouldSetBrandStatusOnAddingStockLevel() {
+
+        StockStatus expectedStatus = ACTIVE_STATUS;
+        when(clientStatusMapper.getClientStatus(anyLong()))
+                .thenReturn(expectedStatus);
+        StockLevel stockLevel = new StockLevel();
+        stockLevel.setBrandId(irrelevantId);
+
+        service.addStockLevel(stockLevel);
+
+        verify(stockLevelRepository).addStockLevel(stockLevelCaptor.capture());
+        assertEquals(expectedStatus.getValueAsString(), stockLevelCaptor.getValue().getStatus());
     }
 
     @Test

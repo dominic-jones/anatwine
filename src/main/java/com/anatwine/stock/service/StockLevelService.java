@@ -19,6 +19,9 @@ public class StockLevelService {
     @Inject
     private CurrentDateFactory currentDateFactory;
 
+    @Inject
+    private ClientStatusMapper clientStatusMapper;
+
     public List<StockLevel> getStockLevelsForBrand(Long brandId) {
         return stockLevelRepository.getStockLevelsForBrand(brandId);
     }
@@ -34,14 +37,10 @@ public class StockLevelService {
 
         stockLevel.setUpdatedAt(currentDateFactory.createDate());
 
-        /*
-          if this is our premier client then set active as they auto activate everything
-         */
-        if (stockLevel.getBrandId() == 1L) {
-            stockLevel.setStatus("active");
-        } else {
-            stockLevel.setStatus("pending");
-        }
+        stockLevel.setStatus(
+                clientStatusMapper.getClientStatus(stockLevel.getBrandId())
+                        .getValueAsString()
+        );
 
         stockLevelRepository.addStockLevel(stockLevel);
     }
