@@ -28,7 +28,7 @@ public class StockLevelRepository {
 
     public StockLevel getStockLevelForBrand(Long brandId,
                                             Long stockLevelId) {
-        return (StockLevel) entityManager.createQuery("select s from StockLevel s where s.brandId = :brandId and s.Id = :id")
+        return entityManager.createQuery("select s from StockLevel s where s.brandId = :brandId and s.Id = :id", StockLevel.class)
                 .setParameter("brandId", brandId)
                 .setParameter("id", stockLevelId)
                 .getSingleResult();
