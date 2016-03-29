@@ -1,6 +1,6 @@
 package com.anatwine.stock.service;
 
-import com.anatwine.stock.date.CurrentDateFactory;
+import com.anatwine.stock.date.CurrentTimestampFactory;
 import com.anatwine.stock.entity.StockLevel;
 import com.anatwine.stock.repository.StockLevelRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class StockLevelService {
     private StockLevelRepository stockLevelRepository;
 
     @Inject
-    private CurrentDateFactory currentDateFactory;
+    private CurrentTimestampFactory currentTimestampFactory;
 
     @Inject
     private ClientStatusMapper clientStatusMapper;
@@ -42,7 +42,7 @@ public class StockLevelService {
         checkArgument(stockLevel.getBrandId() != null, "brandId is null");
         checkArgument(stockLevel.getChannels() != null, "channels are null");
 
-        stockLevel.setUpdatedAt(currentDateFactory.createDate());
+        stockLevel.setUpdatedAt(currentTimestampFactory.createDate());
 
         stockLevel.setStatus(
                 clientStatusMapper.getClientStatus(stockLevel.getBrandId())

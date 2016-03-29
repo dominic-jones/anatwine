@@ -1,6 +1,6 @@
 package com.anatwine.stock.service;
 
-import com.anatwine.stock.date.CurrentDateFactory;
+import com.anatwine.stock.date.CurrentTimestampFactory;
 import com.anatwine.stock.entity.StockLevel;
 import com.anatwine.stock.repository.StockLevelRepository;
 import org.junit.Before;
@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import static com.anatwine.stock.service.StockStatus.ACTIVE_STATUS;
@@ -34,7 +34,7 @@ public class StockLevelServiceTests {
     ClientStatusMapper clientStatusMapper;
 
     @Mock
-    CurrentDateFactory currentDateFactory;
+    CurrentTimestampFactory currentTimestampFactory;
 
     @Captor
     ArgumentCaptor<StockLevel> stockLevelCaptor;
@@ -84,8 +84,8 @@ public class StockLevelServiceTests {
     @Test
     public void shouldSetDateOnAddingStockLevel() {
 
-        Date expectedDate = new Date();
-        when(currentDateFactory.createDate())
+        Timestamp expectedDate = new Timestamp(System.currentTimeMillis());
+        when(currentTimestampFactory.createDate())
                 .thenReturn(expectedDate);
         StockLevel stockLevel = new StockLevel();
         stockLevel.setBrandId(irrelevantId);
