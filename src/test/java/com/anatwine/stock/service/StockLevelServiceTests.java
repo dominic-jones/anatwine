@@ -1,18 +1,23 @@
 package com.anatwine.stock.service;
 
+import com.anatwine.date.CurrentDateFactory;
 import com.anatwine.stock.entity.StockLevel;
 import com.anatwine.stock.repository.StockLevelRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -21,16 +26,61 @@ public class StockLevelServiceTests {
     @Mock
     StockLevelRepository stockLevelRepository;
 
+    @Mock
+    CurrentDateFactory currentDateFactory;
+
+    @Captor
+    ArgumentCaptor<StockLevel> stockLevelCaptor;
+
     @InjectMocks
     StockLevelService service;
 
     long brandId = 1L;
     long stockLevelId = 1L;
+    long irrelevantId = 7L;
+
+    @Test(expected = IllegalArgumentException.class)
+    public void givenNoBrandIdWhenAddingStockLevelThenFail() {
+
+        StockLevel stockLevel = new StockLevel();
+
+        service.addStockLevel(stockLevel);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void givenNoChannelsWhenAddingStockLevelThenFail() {
+
+        StockLevel stockLevel = new StockLevel();
+        stockLevel.setBrandId(irrelevantId);
+        stockLevel.setChannels(null);
+
+        service.addStockLevel(stockLevel);
+    }
 
     @Test
-    public void testAddNewStockLevel() {
+    public void givenValidInputsWhenAddingStockLevelThenSucceed() {
 
-        assertNotNull(service.AddStockLevel(new StockLevel()));
+        StockLevel stockLevel = new StockLevel();
+        stockLevel.setBrandId(irrelevantId);
+
+        service.addStockLevel(stockLevel);
+
+        verify(stockLevelRepository).addStockLevel(stockLevel);
+    }
+
+    @Test
+    public void shouldSetDateOnAddingStockLevel() {
+
+        Date expectedDate = new Date();
+        when(currentDateFactory.createDate())
+                .thenReturn(expectedDate);
+        StockLevel stockLevel = new StockLevel();
+        stockLevel.setBrandId(irrelevantId);
+
+        service.addStockLevel(stockLevel);
+
+        verify(stockLevelRepository).addStockLevel(stockLevelCaptor.capture());
+        assertEquals(expectedDate, stockLevelCaptor.getValue().getUpdatedAt());
     }
 
     @Test

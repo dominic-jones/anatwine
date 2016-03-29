@@ -26,7 +26,7 @@ public class StockLevelWS {
 
     @RequestMapping(value = "/stocklevel", method = RequestMethod.PUT)
     public void addStockLevel(@RequestBody StockLevel stockLevel){
-        stockLevelService.AddStockLevel(stockLevel);
+        stockLevelService.addStockLevel(stockLevel);
     }
 
     @RequestMapping(value = "/helloworld")

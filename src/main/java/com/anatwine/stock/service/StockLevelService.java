@@ -1,18 +1,23 @@
 package com.anatwine.stock.service;
 
+import com.anatwine.date.CurrentDateFactory;
 import com.anatwine.stock.entity.StockLevel;
 import com.anatwine.stock.repository.StockLevelRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.Date;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Service
 public class StockLevelService {
 
     @Inject
     private StockLevelRepository stockLevelRepository;
+
+    @Inject
+    private CurrentDateFactory currentDateFactory;
 
     public List<StockLevel> getStockLevelsForBrand(Long brandId) {
         return stockLevelRepository.getStockLevelsForBrand(brandId);
@@ -23,12 +28,11 @@ public class StockLevelService {
         return stockLevelRepository.getStockLevelForBrand(brandId, stockLevelId);
     }
 
-    public boolean AddStockLevel(StockLevel stockLevel) {
-        if (stockLevel.getBrandId() == null || stockLevel.getChannels() == null) {
-            return false;
-        }
+    public void addStockLevel(StockLevel stockLevel) {
+        checkArgument(stockLevel.getBrandId() != null, "BrandId is null");
+        checkArgument(stockLevel.getChannels() != null, "Channels are null");
 
-        stockLevel.setUpdatedAt(new Date());
+        stockLevel.setUpdatedAt(currentDateFactory.createDate());
 
         /*
           if this is our premier client then set active as they auto activate everything
@@ -40,8 +44,6 @@ public class StockLevelService {
         }
 
         stockLevelRepository.addStockLevel(stockLevel);
-
-        return true;
     }
 
 }
