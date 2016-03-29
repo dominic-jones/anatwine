@@ -10,7 +10,7 @@ import static com.anatwine.stock.service.StockStatus.PENDING_STATUS;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BrandStatusStrategyTests {
+public class ClientStatusMapperTests {
 
     @InjectMocks
     ClientStatusMapper clientStatusMapper;
