@@ -2,16 +2,16 @@ package com.anatwine.stock.service;
 
 import com.anatwine.stock.entity.StockLevel;
 import com.anatwine.stock.repository.StockLevelRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
@@ -21,31 +21,27 @@ public class StockLevelServiceTests {
     @Mock
     StockLevelRepository stockLevelRepository;
 
-    @Mock
-    List<StockLevel> stockLevels = new ArrayList<>();
-
     @InjectMocks
     StockLevelService service;
 
     long brandId = 1L;
     long stockLevelId = 1L;
 
-    @Before
-    public void setUp() throws Exception {
-        stockLevels.add(new StockLevel());
-
-        when(stockLevelRepository.getStockLevelsForBrand(brandId))
-                .thenReturn(stockLevels);
-    }
-
     @Test
     public void testAddNewStockLevel() {
+
         assertNotNull(service.AddStockLevel(new StockLevel()));
     }
 
     @Test
-    public void testStockLevelForBrand() {
-        assertNotNull(service.getStockLevelsForBrand(brandId));
+    public void shouldReturnStockLevelForBrandId() {
+        StockLevel expected = new StockLevel();
+        when(stockLevelRepository.getStockLevelsForBrand(brandId))
+                .thenReturn(newArrayList(expected));
+
+        List<StockLevel> result = service.getStockLevelsForBrand(brandId);
+
+        assertEquals(expected, result.iterator().next());
     }
 
     @Test
