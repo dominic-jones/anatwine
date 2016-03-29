@@ -1,6 +1,6 @@
 package com.anatwine.stock.service;
 
-import com.anatwine.date.CurrentDateFactory;
+import com.anatwine.stock.date.CurrentDateFactory;
 import com.anatwine.stock.entity.StockLevel;
 import com.anatwine.stock.repository.StockLevelRepository;
 import org.junit.Before;

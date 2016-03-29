@@ -15,7 +15,7 @@ import java.util.List;
 public class StockLevelWS {
 
     @Inject
-    StockLevelService stockLevelService;
+    private StockLevelService stockLevelService;
 
     @RequestMapping(value = "/stocklevel/list", method = RequestMethod.GET)
     public List<StockLevel> getStockLevelsForBrand(@RequestParam(value = "brand") Long brandId) {

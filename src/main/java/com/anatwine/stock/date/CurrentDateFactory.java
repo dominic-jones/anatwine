@@ -1,4 +1,4 @@
-package com.anatwine.date;
+package com.anatwine.stock.date;
 
 import org.springframework.stereotype.Component;
 

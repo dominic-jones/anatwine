@@ -1,24 +1,17 @@
 package com.anatwine.stock.repository;
 
-import com.anatwine.stock.config.StockLevelServiceConfiguration;
 import com.anatwine.stock.entity.StockLevel;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
+@Component
 public class StockLevelRepository {
 
-    ApplicationContext context;
-
-    EntityManager entityManager;
-
-    public StockLevelRepository() {
-        this.context = new AnnotationConfigApplicationContext(StockLevelServiceConfiguration.class);
-        this.entityManager = context.getBean(EntityManagerFactory.class).createEntityManager();
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public List<StockLevel> getStockLevelsForBrand(Long brandId) {
         return entityManager.createQuery("select s from StockLevel s where s.brandId = :brandId", StockLevel.class)
