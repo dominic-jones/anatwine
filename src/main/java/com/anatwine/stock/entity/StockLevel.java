@@ -1,5 +1,8 @@
 package com.anatwine.stock.entity;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -45,11 +48,11 @@ public class StockLevel {
     private Timestamp updatedAt;
 
     public Set<Long> getChannels() {
-        return channels;
+        return ImmutableSet.copyOf(channels);
     }
 
     public void setChannels(Set<Long> channels) {
-        this.channels = channels;
+        this.channels = Sets.newHashSet(channels);
     }
 
     public Long getBrandId() {
