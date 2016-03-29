@@ -19,6 +19,8 @@ public class BrandRepository {
     }
 
     public Brand getBrand(Long id) {
-        return (Brand) entityManager.createQuery("Select b from Brand where b.id = :id").setParameter("id", id).getSingleResult();
+        return entityManager.createQuery("Select b from Brand b where b.id = :id", Brand.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }
