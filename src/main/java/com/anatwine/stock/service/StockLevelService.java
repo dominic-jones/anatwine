@@ -24,18 +24,23 @@ public class StockLevelService {
     private ClientStatusMapper clientStatusMapper;
 
     public List<StockLevel> getStockLevelsForBrand(Long brandId) {
+        checkArgument(brandId != null, "brandId is null");
+
         return stockLevelRepository.getStockLevelsForBrand(brandId);
     }
 
     public StockLevel getStockLevel(Long brandId,
                                     Long stockLevelId) {
+        checkArgument(brandId != null, "brandId is null");
+        checkArgument(stockLevelId != null, "stockLevelId is null");
+
         return stockLevelRepository.getStockLevelForBrand(brandId, stockLevelId);
     }
 
     @Transactional
     public void addStockLevel(StockLevel stockLevel) {
-        checkArgument(stockLevel.getBrandId() != null, "BrandId is null");
-        checkArgument(stockLevel.getChannels() != null, "Channels are null");
+        checkArgument(stockLevel.getBrandId() != null, "brandId is null");
+        checkArgument(stockLevel.getChannels() != null, "channels are null");
 
         stockLevel.setUpdatedAt(currentDateFactory.createDate());
 

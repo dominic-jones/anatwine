@@ -111,6 +111,11 @@ public class StockLevelServiceTests {
         assertEquals(expectedStatus.getValueAsString(), stockLevelCaptor.getValue().getStatus());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void givenInvalidBrandIdWhenGettingStockLevelsShouldFail() {
+        service.getStockLevelsForBrand(null);
+    }
+
     @Test
     public void shouldReturnStockLevelForBrandId() {
         StockLevel expected = new StockLevel();
@@ -122,8 +127,18 @@ public class StockLevelServiceTests {
         assertEquals(expected, result.iterator().next());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void givenInvalidBrandIdWhenGettingStockLevelShouldFail() {
+        service.getStockLevel(null, stockLevelId);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void givenInvalidStockIdWhenGettingStockLevelShouldFail() {
+        service.getStockLevel(brandId, null);
+    }
+
     @Test
-    public void testCurrentStockLevel() {
+    public void shouldReturnStockLevelForBrandAndStock() {
         when(stockLevelRepository.getStockLevelForBrand(brandId, stockLevelId))
                 .thenReturn(new StockLevel());
 
