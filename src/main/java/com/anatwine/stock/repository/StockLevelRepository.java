@@ -1,13 +1,13 @@
 package com.anatwine.stock.repository;
 
 import com.anatwine.stock.entity.StockLevel;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Component
+@Repository
 public class StockLevelRepository {
 
     @PersistenceContext
@@ -28,13 +28,6 @@ public class StockLevelRepository {
     }
 
     public void addStockLevel(StockLevel stockLevel) {
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(stockLevel);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        entityManager.persist(stockLevel);
     }
-
 }

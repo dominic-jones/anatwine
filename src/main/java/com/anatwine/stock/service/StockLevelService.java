@@ -4,6 +4,7 @@ import com.anatwine.stock.date.CurrentDateFactory;
 import com.anatwine.stock.entity.StockLevel;
 import com.anatwine.stock.repository.StockLevelRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -31,6 +32,7 @@ public class StockLevelService {
         return stockLevelRepository.getStockLevelForBrand(brandId, stockLevelId);
     }
 
+    @Transactional
     public void addStockLevel(StockLevel stockLevel) {
         checkArgument(stockLevel.getBrandId() != null, "BrandId is null");
         checkArgument(stockLevel.getChannels() != null, "Channels are null");
