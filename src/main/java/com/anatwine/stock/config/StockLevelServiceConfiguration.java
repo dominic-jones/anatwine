@@ -38,18 +38,19 @@ public class StockLevelServiceConfiguration implements Loggable {
 
     @Bean(destroyMethod = "close")
     public DataSource onlineDataSource() {
-        final String jdbcUrl = "";
+        String jdbcUrl = "jdbc:postgresql://localhost:5432/stock";
         logger().info("Online JDBC URL::`{}`", jdbcUrl);
 
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("org.postgresql.Driver");
-        basicDataSource.setUrl("jdbc:postgresql://localhost:5432/stock");
+        basicDataSource.setUrl(jdbcUrl);
         basicDataSource.setUsername("stock");
         basicDataSource.setPassword("stockpassword");
         basicDataSource.setValidationQuery("select 1");
         basicDataSource.setTimeBetweenEvictionRunsMillis(1000);
         basicDataSource.setTestWhileIdle(true);
         basicDataSource.setDefaultAutoCommit(false);
+
         return basicDataSource;
     }
 }
