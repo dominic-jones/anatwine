@@ -1,7 +1,7 @@
 package com.anatwine.stock.service;
 
 public enum StockStatus {
-    ACTIVE_STATUS("active"), PENDING_STATUS("pending");
+    ACTIVE_STATUS("activated"), APPROVED("approved"), PENDING_STATUS("pending");
 
     private String databaseString;
 

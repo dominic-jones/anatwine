@@ -38,9 +38,6 @@ public class StockLevel {
     @Column(name = "channel_id")
     private Set<Long> channels = new HashSet<>();
 
-    /**
-     * Status can be pending, approved, activated
-     */
     @Column
     private String status;
 
