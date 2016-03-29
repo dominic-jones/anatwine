@@ -37,9 +37,4 @@ public class StockLevelWS implements Loggable {
         stockLevelService.addStockLevel(stockLevel);
     }
 
-    @RequestMapping(value = "/helloworld")
-    public String hello() {
-        return "hello";
-    }
-
 }
