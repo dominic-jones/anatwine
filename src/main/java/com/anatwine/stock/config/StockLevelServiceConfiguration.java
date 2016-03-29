@@ -1,5 +1,6 @@
 package com.anatwine.stock.config;
 
+import com.anatwine.stock.logger.Loggable;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +13,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Configuration
-public class StockLevelServiceConfiguration {
+public class StockLevelServiceConfiguration implements Loggable {
 
     @Bean
     public PlatformTransactionManager transactionManager() throws SQLException {
@@ -38,7 +39,7 @@ public class StockLevelServiceConfiguration {
     @Bean(destroyMethod = "close")
     public DataSource onlineDataSource() {
         final String jdbcUrl = "";
-        System.out.println(String.format("Online JDBC URL::%s", jdbcUrl));
+        logger().info("Online JDBC URL::`{}`", jdbcUrl);
 
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("org.postgresql.Driver");
