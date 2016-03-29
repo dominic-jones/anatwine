@@ -1,6 +1,12 @@
 package com.anatwine.stock.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -15,8 +21,8 @@ public class Brand {
 
     @Column
     @OneToMany
-    @JoinTable(name = "brands_channels", joinColumns = { @JoinColumn(name="brand_id", referencedColumnName = "id")},
-    inverseJoinColumns = {@JoinColumn(name="channel_id", referencedColumnName = "id")})
+    @JoinTable(name = "brands_channels", joinColumns = {@JoinColumn(name = "brand_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "channel_id", referencedColumnName = "id")})
     private List<Channel> channels;
 
     public List<Channel> getChannels() {

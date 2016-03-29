@@ -20,26 +20,26 @@ public class StockLevelRepository {
         this.entityManager = context.getBean(EntityManagerFactory.class).createEntityManager();
     }
 
-    public List<StockLevel> getStockLevelsForBrand(Long brandId){
-       return entityManager.createQuery("select s from StockLevel s where s.brandId = :brandId", StockLevel.class)
-               .setParameter("brandId", brandId)
-               .getResultList();
+    public List<StockLevel> getStockLevelsForBrand(Long brandId) {
+        return entityManager.createQuery("select s from StockLevel s where s.brandId = :brandId", StockLevel.class)
+                .setParameter("brandId", brandId)
+                .getResultList();
     }
 
-
-    public StockLevel getStockLevelForBrand(Long brandId, Long stockLevelId){
-        return (StockLevel)entityManager.createQuery("select s from StockLevel s where s.brandId = :brandId and s.Id = :id")
+    public StockLevel getStockLevelForBrand(Long brandId,
+                                            Long stockLevelId) {
+        return (StockLevel) entityManager.createQuery("select s from StockLevel s where s.brandId = :brandId and s.Id = :id")
                 .setParameter("brandId", brandId)
                 .setParameter("id", stockLevelId)
                 .getSingleResult();
     }
 
-    public void addStockLevel(StockLevel stockLevel){
+    public void addStockLevel(StockLevel stockLevel) {
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(stockLevel);
             entityManager.getTransaction().commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

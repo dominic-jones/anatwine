@@ -32,9 +32,8 @@ public class StockLevel {
     @Column(name = "brand_sku")
     private String brandSku;
 
-
     @ElementCollection
-    @CollectionTable(name = "stock_levels_channels", joinColumns = { @JoinColumn(name="stock_level_id")})
+    @CollectionTable(name = "stock_levels_channels", joinColumns = {@JoinColumn(name = "stock_level_id")})
     @Column(name = "channel_id")
     private Set<Long> channels = new HashSet<>();
 

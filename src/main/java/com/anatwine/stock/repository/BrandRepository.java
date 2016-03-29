@@ -18,7 +18,7 @@ public class BrandRepository {
         this.entityManager = context.getBean(EntityManagerFactory.class).createEntityManager();
     }
 
-    public Brand getBrand(Long id){
-        return (Brand)entityManager.createQuery("Select b from Brand where b.id = :id").setParameter("id", id).getSingleResult();
+    public Brand getBrand(Long id) {
+        return (Brand) entityManager.createQuery("Select b from Brand where b.id = :id").setParameter("id", id).getSingleResult();
     }
 }
